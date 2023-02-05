@@ -57,6 +57,12 @@ public class Search_CarPage extends Carvana_BasePage{
     @FindBy(css = "div[data-qa='shipping-cost']")
     public List<WebElement> freeShippingChip;
 
+    @FindBy(css = "button[data-cv-test$='NextPageButton']")
+    public WebElement nextButton;
+
+    @FindBy(css = "svg[class*='llqIcd']")
+    public WebElement closeButton;
+
 
 
 

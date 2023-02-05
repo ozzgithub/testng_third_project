@@ -1,14 +1,15 @@
 package scripts;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.Search_CarPage;
+import utilities.Driver;
 import utilities.Waiter;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public class Carvana_Test extends Carvana_Base{
+public class Carvana_Test extends Carvana_Base {
 
 
     @Test(priority = 1, description = "Validate Carvana home page title and url")
@@ -25,8 +26,9 @@ public class Carvana_Test extends Carvana_Base{
 
     @Test(priority = 3, description = "Validate the main navigation section items")
     public void validateNavigationItems() {
-        IntStream.range(0,carvana_basePage.navigationSections.size()).forEach(i -> {
-            Assert.assertTrue(carvana_basePage.navigationSections.get(i).isDisplayed()); });
+        IntStream.range(0, carvana_basePage.navigationSections.size()).forEach(i -> {
+            Assert.assertTrue(carvana_basePage.navigationSections.get(i).isDisplayed());
+        });
     }
 
     @Test(priority = 4, description = "Validate the sign in error message")
@@ -50,37 +52,60 @@ public class Carvana_Test extends Carvana_Base{
 
         search_carPage.goMercedesPage();
         Assert.assertTrue(Waiter.waitUntilUrlIs("mercedes-benz", 60));
-        IntStream.range(0, search_carPage.eachTile.size()).forEach(i -> {
-            Assert.assertTrue(search_carPage.eachTile.get(i).isDisplayed());
-            Assert.assertTrue(search_carPage.eachImage.get(i).isDisplayed());
-            Assert.assertTrue(search_carPage.eachFavButton.get(i).isDisplayed());
-            Assert.assertTrue(search_carPage.tileBody.get(i).isDisplayed());
 
-            Assert.assertTrue(search_carPage.tileInventoryType.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.tileInventoryType.get(i).getText());
-            Assert.assertTrue(search_carPage.yearMakeModelInfoText.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.yearMakeModelInfoText.get(i).getText());
-            Assert.assertTrue(search_carPage.trimMileageInfo.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.trimMileageInfo.get(i).getText());
+        Actions action = new Actions(Driver.getDriver());
 
-            //   $22,300
-            Assert.assertTrue(Integer.parseInt(search_carPage.priceInfo.get(i).getText().replaceAll("[^0-9]", "")) > 0);
 
-            Assert.assertTrue(search_carPage.monthlyPaymentInfoDownPaymentInfo.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.monthlyPaymentInfoDownPaymentInfo.get(i).getText());
 
-            Assert.assertTrue(search_carPage.freeShippingChip.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.freeShippingChip.get(i).getText());
+        while (search_carPage.nextButton.isEnabled()) {
+            IntStream.range(0, search_carPage.eachTile.size()).forEach(i -> {
+                Assert.assertTrue(search_carPage.eachTile.get(i).isDisplayed());
+                Assert.assertTrue(search_carPage.eachImage.get(i).isDisplayed());
+                Assert.assertTrue(search_carPage.eachFavButton.get(i).isDisplayed());
+                Assert.assertTrue(search_carPage.tileBody.get(i).isDisplayed());
 
-        });
+                Assert.assertTrue(search_carPage.tileInventoryType.get(i).isDisplayed());
+                Assert.assertNotNull(search_carPage.tileInventoryType.get(i).getText());
+                Assert.assertTrue(search_carPage.yearMakeModelInfoText.get(i).isDisplayed());
+                Assert.assertNotNull(search_carPage.yearMakeModelInfoText.get(i).getText());
+                Assert.assertTrue(search_carPage.trimMileageInfo.get(i).isDisplayed());
+                Assert.assertNotNull(search_carPage.trimMileageInfo.get(i).getText());
+
+                //   $22,300
+                Assert.assertTrue(Integer.parseInt(search_carPage.priceInfo.get(i).getText().replaceAll("[^0-9]", "")) > 0);
+
+                Assert.assertTrue(search_carPage.monthlyPaymentInfoDownPaymentInfo.get(i).isDisplayed());
+                Assert.assertNotNull(search_carPage.monthlyPaymentInfoDownPaymentInfo.get(i).getText());
+
+                Assert.assertTrue(search_carPage.freeShippingChip.get(i).isDisplayed());
+                Assert.assertNotNull(search_carPage.freeShippingChip.get(i).getText());
+
+            });
+
+
+            action.moveToElement(search_carPage.nextButton).click().perform();
+
+
+            try {
+                search_carPage.closeButton.click();
+            } catch (Exception e) {
+                System.out.println(Arrays.toString(e.getStackTrace()));
+            }
+        }
+
+
 
     }
 
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
