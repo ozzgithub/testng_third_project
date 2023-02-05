@@ -13,7 +13,6 @@ public class Carvana_Test extends Carvana_Base{
 
     @Test(priority = 1, description = "Validate Carvana home page title and url")
     public void validateTitleAndUrl() {
-
         Assert.assertEquals(driver.getTitle(), "Carvana | Buy & Finance Used Cars Online | At Home Delivery");
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.carvana.com/");
     }
@@ -48,39 +47,9 @@ public class Carvana_Test extends Carvana_Base{
 
     @Test(priority = 6, description = "Validate the search result titles")
     public void validateSearchResultTitles() {
-        search_carPage.searchLinkClick();
-        search_carPage.searchBarToolBar.sendKeys("mercedes-benz");
-        search_carPage.goButton.click();
-        Assert.assertTrue(Waiter.waitUntilUrlIs("mercedes-benz", 60));
 
-
-        IntStream.range(0, search_carPage.eachTile.size()).forEach(i -> {
-            Assert.assertTrue(search_carPage.eachTile.get(i).isDisplayed());
-            Assert.assertTrue(search_carPage.eachImage.get(i).isDisplayed());
-            Assert.assertTrue(search_carPage.eachFavButton.get(i).isDisplayed());
-            Assert.assertTrue(search_carPage.tileBody.get(i).isDisplayed());
-
-            Assert.assertTrue(search_carPage.tileInventoryType.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.tileInventoryType.get(i).getText());
-            Assert.assertTrue(search_carPage.yearMakeModelInfoText.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.yearMakeModelInfoText.get(i).getText());
-            Assert.assertTrue(search_carPage.trimMileageInfo.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.trimMileageInfo.get(i).getText());
-
-            //   $22,300
-            Assert.assertTrue(Integer.parseInt(search_carPage.priceInfo.get(i).getText().replaceAll("[^0-9]", "")) > 0);
-
-            Assert.assertTrue(search_carPage.monthlyPaymentInfoDownPaymentInfo.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.monthlyPaymentInfoDownPaymentInfo.get(i).getText());
-
-            Assert.assertTrue(search_carPage.freeShippingChip.get(i).isDisplayed());
-            Assert.assertNotNull(search_carPage.freeShippingChip.get(i).getText());
-
-        });
-
-
-
-
+        search_carPage.goMercedesPage();
+        search_carPage.ValidateEachSearchResultInfo();
 
     }
 

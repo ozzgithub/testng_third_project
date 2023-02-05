@@ -42,15 +42,6 @@ public class Carvana_BasePage {
 
 
 
-
-
-
-
-
-
-
-
-
     public void login() {
         signInButton.click();
         emailInputBox.sendKeys("johndoe@gmail.com");
