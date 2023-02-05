@@ -49,7 +49,30 @@ public class Carvana_Test extends Carvana_Base{
     public void validateSearchResultTitles() {
 
         search_carPage.goMercedesPage();
-        search_carPage.ValidateEachSearchResultInfo();
+        Assert.assertTrue(Waiter.waitUntilUrlIs("mercedes-benz", 60));
+        IntStream.range(0, search_carPage.eachTile.size()).forEach(i -> {
+            Assert.assertTrue(search_carPage.eachTile.get(i).isDisplayed());
+            Assert.assertTrue(search_carPage.eachImage.get(i).isDisplayed());
+            Assert.assertTrue(search_carPage.eachFavButton.get(i).isDisplayed());
+            Assert.assertTrue(search_carPage.tileBody.get(i).isDisplayed());
+
+            Assert.assertTrue(search_carPage.tileInventoryType.get(i).isDisplayed());
+            Assert.assertNotNull(search_carPage.tileInventoryType.get(i).getText());
+            Assert.assertTrue(search_carPage.yearMakeModelInfoText.get(i).isDisplayed());
+            Assert.assertNotNull(search_carPage.yearMakeModelInfoText.get(i).getText());
+            Assert.assertTrue(search_carPage.trimMileageInfo.get(i).isDisplayed());
+            Assert.assertNotNull(search_carPage.trimMileageInfo.get(i).getText());
+
+            //   $22,300
+            Assert.assertTrue(Integer.parseInt(search_carPage.priceInfo.get(i).getText().replaceAll("[^0-9]", "")) > 0);
+
+            Assert.assertTrue(search_carPage.monthlyPaymentInfoDownPaymentInfo.get(i).isDisplayed());
+            Assert.assertNotNull(search_carPage.monthlyPaymentInfoDownPaymentInfo.get(i).getText());
+
+            Assert.assertTrue(search_carPage.freeShippingChip.get(i).isDisplayed());
+            Assert.assertNotNull(search_carPage.freeShippingChip.get(i).getText());
+
+        });
 
     }
 
